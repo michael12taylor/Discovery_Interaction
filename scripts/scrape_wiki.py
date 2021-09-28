@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from functools import reduce
 
 # Even though 50000 is the stated limit, adding some extra space for added newlines, HTML tags, etc...
-max_char_count = 50000 - 2000
+max_char_count = 50000 - 3500
 output_dir = "./wiki_parser_output/"
 
 def main():
@@ -20,8 +20,8 @@ def main():
     parsed = BeautifulSoup(response.text, 'html.parser')
     interesting_data = parsed.find(class_="mw-parser-output")
     
-    # Want the content of all paragraphs, h1s, h2s, ..., h6s.
-    find_tags = ["p", "h1", "h2", "h3", "h4", "h5", "h6"]
+    # Want the content of all paragraphs, h1s, h2s, ..., h6s, and the content in lists.
+    find_tags = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "li"]
     tags = interesting_data.find_all(find_tags)
     tag_texts = list(map(lambda elem: elem.text, tags))
 
@@ -66,3 +66,4 @@ def next_chunk(tag_texts, start, max_char_count):
 
 if __name__ == "__main__":
     main()
+    
