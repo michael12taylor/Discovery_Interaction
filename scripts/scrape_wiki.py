@@ -9,13 +9,13 @@ from functools import reduce
 max_char_count = 50000 - 3500
 output_dir = "./wiki_parser_output/"
 
-def main():
+def main(character_name = "", wiki_page_url = ""):
     ''' Needs two arguments: 
         1) The name of the character. Used only for determining output file names.
         2) The URL of the wiki page to parse.
     '''
-    character_name = sys.argv[1]
-    wiki_page_url = sys.argv[2]
+    character_name = sys.argv[1] if character_name == "" else character_name
+    wiki_page_url = sys.argv[2] if wiki_page_url == "" else wiki_page_url
     response = requests.get(wiki_page_url)
     parsed = BeautifulSoup(response.text, 'html.parser')
     interesting_data = parsed.find(class_="mw-parser-output")
@@ -39,7 +39,8 @@ def main():
         end = next_chunk(tag_texts, start, max_char_count)
         subslice = tag_texts[start:end+1]
         output_string = reduce(lambda prev, curr: f"{prev}\n{curr}", subslice)
-        output_file = open(os.path.join(output_dir, f"{character_name}_{file_number}.html"), "w", encoding="utf-8")
+        output_file_path = os.path.join(output_dir, f"{character_name}_{file_number}.html")
+        output_file = open(output_file_path, "w", encoding="utf-8")
         
         # Write the <html> and <p> tags to satisfy watson needing this to be HTML
         output_file.write("<html><p>")
