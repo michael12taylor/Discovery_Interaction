@@ -11,8 +11,8 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "Harry Potter", 
-                "https://harrypotter.fandom.com/wiki/Harry_Potter"
+                "Thor Boi", 
+                "https://marvelcinematicuniverse.fandom.com/wiki/Thor"
             ]
         }
     ]

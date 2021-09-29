@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from functools import reduce
 
 # Even though 50000 is the stated limit, adding some extra space for added newlines, HTML tags, etc...
-max_char_count = 50000 - 3500
+max_char_count = 50000 - 1000
 output_dir = "./wiki_parser_output/"
 
 def main(character_name = "", wiki_page_url = ""):
@@ -37,7 +37,7 @@ def main(character_name = "", wiki_page_url = ""):
     
     while start < len(tag_texts):
         end = next_chunk(tag_texts, start, max_char_count)
-        subslice = tag_texts[start:end+1]
+        subslice = tag_texts[start:end]
         output_string = reduce(lambda prev, curr: f"{prev}\n{curr}", subslice)
         output_file_path = os.path.join(output_dir, f"{character_name}_{file_number}.html")
         output_file = open(output_file_path, "w", encoding="utf-8")
@@ -48,13 +48,13 @@ def main(character_name = "", wiki_page_url = ""):
         output_file.write("</p></html>")
         output_file.close()
 
-        start = end + 1
+        start = end
         file_number += 1
 
 
 def next_chunk(tag_texts, start, max_char_count):
     ''' Given the tag texts and a start index, return the end index such that the sum length of 
-        all texts in range [start,end] <= upper limit.
+        all texts in range [start,end) <= upper limit.
     '''
     end = start
     sum_length = 0
