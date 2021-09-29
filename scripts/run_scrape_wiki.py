@@ -14,7 +14,7 @@ characters_urls = {
     "Gandalf": "https://lotr.fandom.com/wiki/Gandalf",
     "Thor": "https://marvelcinematicuniverse.fandom.com/wiki/Thor",
     "Iron Man": "https://marvelcinematicuniverse.fandom.com/wiki/Iron_Man",
-    "Black Widdow": "https://marvelcinematicuniverse.fandom.com/wiki/Black_Widow",
+    "Black Widow": "https://marvelcinematicuniverse.fandom.com/wiki/Black_Widow",
     "Thanos": "https://marvelcinematicuniverse.fandom.com/wiki/Thanos"
 }
 scraper_executable_name = "./scrape_wiki.py"
