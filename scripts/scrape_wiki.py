@@ -9,21 +9,14 @@ from functools import reduce
 max_char_count = 50000 - 1000
 output_dir = "./wiki_parser_output/"
 
-def main(character_name = "", wiki_page_url = ""):
+def main(universe_name, character_name = "", wiki_page_url = ""):
     ''' Needs two arguments: 
         1) The name of the character. Used only for determining output file names.
         2) The URL of the wiki page to parse.
     '''
     character_name = sys.argv[1] if character_name == "" else character_name
     wiki_page_url = sys.argv[2] if wiki_page_url == "" else wiki_page_url
-    response = requests.get(wiki_page_url)
-    parsed = BeautifulSoup(response.text, 'html.parser')
-    interesting_data = parsed.find(class_="mw-parser-output")
-    
-    # Want the content of all paragraphs, h1s, h2s, ..., h6s, and the content in lists.
-    find_tags = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "li"]
-    tags = interesting_data.find_all(find_tags)
-    tag_texts = list(map(lambda elem: elem.text, tags))
+    tag_texts = get_tag_texts(wiki_page_url)
 
     
     # Create output directory if not exist
@@ -39,7 +32,7 @@ def main(character_name = "", wiki_page_url = ""):
         end = next_chunk(tag_texts, start, max_char_count)
         subslice = tag_texts[start:end]
         output_string = reduce(lambda prev, curr: f"{prev}\n{curr}", subslice)
-        output_file_path = os.path.join(output_dir, f"{character_name}_{file_number}.html")
+        output_file_path = os.path.join(output_dir, f"{universe_name}_{character_name}_{file_number}.html")
         output_file = open(output_file_path, "w", encoding="utf-8")
         
         # Write the <html> and <p> tags to satisfy watson needing this to be HTML
@@ -63,6 +56,20 @@ def next_chunk(tag_texts, start, max_char_count):
         sum_length += len(tag_texts[end])
         end += 1
     return end
+
+def get_tag_texts(page_url):
+    ''' Get an array of the texts of all the interesting tags (ex: p, h1, etc...) in 
+        the main content mw-parser-output of a wiki url.
+    '''
+    response = requests.get(page_url)
+    parsed = BeautifulSoup(response.text, 'html.parser')
+    interesting_data = parsed.find(class_="mw-parser-output")
+    
+    # Want the content of all paragraphs, h1s, h2s, ..., h6s, and the content in lists.
+    find_tags = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "li"]
+    tags = interesting_data.find_all(find_tags)
+    tag_texts = list(map(lambda elem: elem.text, tags))
+    return tag_texts
     
 
 if __name__ == "__main__":
