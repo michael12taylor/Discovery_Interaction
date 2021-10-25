@@ -3,7 +3,7 @@ import scrape_wiki
 
 def main():
     
-    file_name = "./scripts/universes/star wars_names_urls.csv"
+    file_name = "./scripts/universes/dc_names_urls.csv"
     characters_file = open(file_name)
     csv_reader = csv.reader(characters_file)
 

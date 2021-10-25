@@ -95,7 +95,61 @@ star_wars = {
     ]
 }
 
+game_of_thrones = {
+    "short_name": "game of thrones",
+    "min_content_length": 20000,
+    "base_url": "https://gameofthrones.fandom.com",
+    "character_listing_urls": [
+        "https://gameofthrones.fandom.com/wiki/Category:Living_individuals",
+        "https://gameofthrones.fandom.com/wiki/Category:Living_individuals?from=Musician+4",
+        "https://gameofthrones.fandom.com/wiki/Category:Deceased_individuals",
+        "https://gameofthrones.fandom.com/wiki/Category:Deceased_individuals?from=Egen%2C+Vardis%0AVardis+Egen",
+        "https://gameofthrones.fandom.com/wiki/Category:Deceased_individuals?from=Lead+Kingsguard",
+        "https://gameofthrones.fandom.com/wiki/Category:Deceased_individuals?from=Stark%2C+Jon%0AJon+Stark",
+        "https://gameofthrones.fandom.com/wiki/Category:Deceased_individuals?from=Whitehill%2C+Karl%0AKarl+Whitehill"
+    ]
+}
 
+community = {
+    "short_name": "community",
+    "min_content_length": 10000,
+    "base_url": "https://community-sitcom.fandom.com",
+    "character_listing_urls": [
+        "https://community-sitcom.fandom.com/wiki/Category:Community_Characters",
+        "https://community-sitcom.fandom.com/wiki/Category:Community_Characters?from=Shirley+and+Andre"
+    ]
+}
+
+rick_and_morty = {
+    "short_name": "rick and morty",
+    "min_content_length": 10000,
+    "base_url": "https://rickandmorty.fandom.com",
+    "character_listing_urls": [
+        "https://rickandmorty.fandom.com/wiki/Category:Characters",
+        "https://rickandmorty.fandom.com/wiki/Category:Characters?from=Greebybobes",
+        "https://rickandmorty.fandom.com/wiki/Category:Characters?from=Regular+Legs"
+    ]
+}
+
+the_office = {
+    "short_name": "the office",
+    "min_content_length": 10000,
+    "base_url": "https://theoffice.fandom.com",
+    "character_listing_urls": [
+        "https://theoffice.fandom.com/wiki/Category:Characters",
+        "https://theoffice.fandom.com/wiki/Category:Characters?from=Merv+Bronte"
+    ]
+}
+
+dccu = {
+    "short_name": "dc",
+    "min_content_length": 5000,
+    "base_url": "https://dcextendeduniverse.fandom.com",
+    "character_listing_urls": [
+        "https://dcextendeduniverse.fandom.com/wiki/Category:Villains",
+        "https://dcextendeduniverse.fandom.com/wiki/Category:Heroes"
+    ]
+}
 
 def get_characters(base_wiki_url, listing_urls, min_length, output_file, universe_name):
     '''
@@ -133,7 +187,7 @@ def get_characters_in_listing(listing_url, base_wiki_url):
     return characters
 
 def main():
-    universe = star_wars    
+    universe = dccu    
     
     output_file_name = f"{universe['short_name']}_names_urls.csv"
     output_file = open(output_file_name, 'w')
