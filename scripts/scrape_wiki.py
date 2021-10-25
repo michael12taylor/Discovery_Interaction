@@ -1,9 +1,10 @@
-import functools
 import sys
 import os
 import requests
 from bs4 import BeautifulSoup
 from functools import reduce
+import re
+import time
 
 # Even though 50000 is the stated limit, adding some extra space for added newlines, HTML tags, etc...
 max_char_count = 50000 - 1000
@@ -61,7 +62,12 @@ def get_tag_texts(page_url):
     ''' Get an array of the texts of all the interesting tags (ex: p, h1, etc...) in 
         the main content mw-parser-output of a wiki url.
     '''
-    response = requests.get(page_url)
+    try:
+        response = requests.get(page_url)
+    except:
+        time.sleep(5)
+        return []
+    time.sleep(1)
     parsed = BeautifulSoup(response.text, 'html.parser')
     interesting_data = parsed.find(class_="mw-parser-output")
     
@@ -69,6 +75,11 @@ def get_tag_texts(page_url):
     find_tags = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "li"]
     tags = interesting_data.find_all(find_tags)
     tag_texts = list(map(lambda elem: elem.text, tags))
+
+    # Remove bad characters ↑† and any instance of wiki links like [1] [19]
+    for i in range(len(tag_texts)):
+        tag_texts[i] = re.sub(r"(↑|†|\[\d+\])", "", tag_texts[i])
+
     return tag_texts
     
 

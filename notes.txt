@@ -1,3 +1,0 @@
-1. Remove instances of [#] where wiki uses references
-
-2. Remove "↑" character, "†" character

@@ -3,9 +3,9 @@ import scrape_wiki
 
 def main():
     
-    file_name = "./scripts/universes/star_trek_names_urls.csv"
+    file_name = "./scripts/universes/star wars_names_urls.csv"
     characters_file = open(file_name)
-    csv_reader = csv.reader(characters_file, )
+    csv_reader = csv.reader(characters_file)
 
     for row in csv_reader:
         universe = row[0]
